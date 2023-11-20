@@ -35,3 +35,17 @@ describe("GET /api/topics", () => {
     return request(app).get("/api/pictures").expect(404);
   });
 });
+
+describe("GET /api", () => {
+  test("return a status code of 200 and response body with an object describing all the available endpoints on the API", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then((response) => {
+        const endPointsObj = response.body.endPoints
+          expect(endPointsObj.hasOwnProperty('description'))
+          expect(endPointsObj.hasOwnProperty('queries'))
+          expect(endPointsObj.hasOwnProperty('exampleResponse'))
+      });
+  });
+});
