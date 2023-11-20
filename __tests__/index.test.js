@@ -11,6 +11,12 @@ afterAll(() => {
   db.end();
 });
 
+describe("GET /api/healthcheck", () => {
+  test("responds with a 200 status code", () => {
+    return request(app).get("/api/healthcheck").expect(200);
+  });
+});
+
 describe("GET /api/topics", () => {
   test("return a status code of 200 and response body with an array of topic objects", () => {
     return request(app)
@@ -24,5 +30,8 @@ describe("GET /api/topics", () => {
           expect(typeof topic.description).toBe("string");
         });
       });
+  });
+  test("return a status code of 404 for a route that does not exist", () => {
+    return request(app).get("/api/pictures").expect(404);
   });
 });
