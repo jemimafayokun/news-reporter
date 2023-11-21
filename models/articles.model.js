@@ -23,7 +23,18 @@ exports.getAllArticles = () => {
         ORDER BY created_at DESC;`
     )
     .then((data) => {
-      console.log(data.rows)
       return data.rows;
+    });
+};
+
+exports.insertCommentByArticleId = (article_id, username, body) => {
+  return db
+    .query(
+      `INSERT INTO comments(author, body, votes, article_id)
+  VALUES($1, $2, $3, $4) RETURNING *`,
+      [username, body, (votes = 0), article_id]
+    )
+    .then((data) => {
+      return data.rows[0];
     });
 };
