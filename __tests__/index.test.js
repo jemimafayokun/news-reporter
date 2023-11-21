@@ -3,6 +3,7 @@ const seed = require("../db/seeds/seed");
 const db = require("../db/connection");
 const data = require("../db/data/test-data");
 const request = require("supertest");
+const jestSorted = require("jest-sorted");
 
 beforeEach(() => {
   return seed(data);
@@ -87,3 +88,27 @@ describe("GET /api/articles/:article_id", () => {
   });
 });
 
+describe("GET /api/articles", () => {
+  test("return a status code of 200 and response body with all articles", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((response) => {
+        const allArticles = response.body.articles;
+        expect(allArticles).toBeSortedBy("created_at", {
+          descending: true,
+        });
+        expect(allArticles.length).toBe(13);
+        allArticles.forEach((article) => {
+          expect(article.hasOwnProperty("article_id"));
+          expect(article.hasOwnProperty("title"));
+          expect(article.hasOwnProperty("topic"));
+          expect(article.hasOwnProperty("author"));
+          expect(article.hasOwnProperty("created_at"));
+          expect(article.hasOwnProperty("votes"));
+          expect(article.hasOwnProperty("article_img_url"));
+          expect(article.hasOwnProperty("comment_count"));
+        });
+      });
+  });
+});
