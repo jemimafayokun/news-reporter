@@ -23,6 +23,7 @@ exports.getAllArticles = () => {
         ORDER BY created_at DESC;`
     )
     .then((data) => {
+      console.log(data.rows)
       return data.rows;
     });
 };

@@ -100,14 +100,17 @@ describe("GET /api/articles", () => {
         });
         expect(allArticles.length).toBe(13);
         allArticles.forEach((article) => {
-          expect(article.hasOwnProperty("article_id"));
-          expect(article.hasOwnProperty("title"));
-          expect(article.hasOwnProperty("topic"));
-          expect(article.hasOwnProperty("author"));
-          expect(article.hasOwnProperty("created_at"));
-          expect(article.hasOwnProperty("votes"));
-          expect(article.hasOwnProperty("article_img_url"));
-          expect(article.hasOwnProperty("comment_count"));
+        const expectedCreatedAt = new Date('2020-01-15T22:21:00.000Z');
+          expect(article).toMatchObject({
+              article_id: expect.any(Number),
+              title: expect.any(String),
+              topic: expect.any(String),
+              author: expect.any(String),
+              created_at: expect.any(String),
+              votes: expect.any(Number),
+              article_img_url: expect.any(String),
+              comment_count: expect.any(String) 
+          })
         });
       });
   });
