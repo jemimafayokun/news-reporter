@@ -1,4 +1,5 @@
-const { getArticleByID, getAllArticles } = require("../models/articles.model");
+const { checkExists } = require("../db/seeds/utils");
+const { getArticleByID, getAllArticles, fetchCommentsByArticleId } = require("../models/articles.model");
 
 exports.getArticle = (req, res, next) => {
   const { article_id } = req.params;
@@ -14,3 +15,18 @@ exports.getArticles = (req, res, next) => {
     res.status(200).send({ articles });
   });
 };
+
+exports.getCommentsByArticleId = (req, res, next) => {
+  const {article_id} = req.params
+  const commentsByArticleIdPromises = [fetchCommentsByArticleId(article_id)];
+  
+  if (article_id) {
+    commentsByArticleIdPromises.push(checkExists("articles", "article_id", article_id));
+  }
+  
+  Promise.all(commentsByArticleIdPromises)
+    .then((resolvedPromises) => {
+      const comments = resolvedPromises[0];
+      res.status(200).send({ comments });
+    }).catch(next)
+}
