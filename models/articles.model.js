@@ -36,8 +36,6 @@ then((data) => {
   if (!data.rows.length){
     return Promise.reject({ status: 404, msg: "article does not exist" });
   }
- 
-  else {
     return db
     .query(
       `INSERT INTO comments(author, body, votes, article_id)
@@ -47,7 +45,7 @@ then((data) => {
     .then((data) => {
       return data.rows[0];
     });
-  }
+  
 })
  
 };

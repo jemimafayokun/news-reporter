@@ -100,7 +100,6 @@ describe("GET /api/articles", () => {
         });
         expect(allArticles.length).toBe(13);
         allArticles.forEach((article) => {
-          const expectedCreatedAt = new Date("2020-01-15T22:21:00.000Z");
           expect(article).toMatchObject({
             article_id: expect.any(Number),
             title: expect.any(String),
@@ -117,37 +116,37 @@ describe("GET /api/articles", () => {
 });
 
 describe("POST /api/articles/:article_id/comments", () => {
-  test("returns a status code of 200 and response body with posted comment", () => {
+  test("returns a status code of 201 and response body with posted comment", () => {
     return request(app)
       .post("/api/articles/7/comments")
       .send({
-        username: 'icellusedkars',
-        body: 'some interesting stuff'
+        username: "icellusedkars",
+        body: "some interesting stuff",
       })
-      .expect(200)
+      .expect(201)
       .then((response) => {
         const comment = response.body.comment;
-        const createdAt = comment.created_at
+        const createdAt = comment.created_at;
         expect(comment).toEqual({
           comment_id: 19,
-          body: 'some interesting stuff',
+          body: "some interesting stuff",
           article_id: 7,
-          author: 'icellusedkars',
+          author: "icellusedkars",
           votes: 0,
-          created_at: createdAt
-        })
+          created_at: createdAt,
+        });
       });
   });
   test("returns a status code of 404 and sends error message when given a valid but non-existent id", () => {
     return request(app)
       .post("/api/articles/99/comments")
       .send({
-        username: 'icellusedkars',
-        body: 'some interesting stuff'
+        username: "icellusedkars",
+        body: "some interesting stuff",
       })
       .expect(404)
       .then((response) => {
-        expect(response.body.msg).toBe("article does not exist")
+        expect(response.body.msg).toBe("article does not exist");
       });
   });
   test("return a status code of 400 and responds with an appropriate error message when given an invalid id", () => {

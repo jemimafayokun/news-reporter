@@ -21,10 +21,10 @@ exports.getArticles = (req, res, next) => {
 
 exports.postCommentByArticleId = (req, res, next) => {
   const { article_id } = req.params;
-  const { body } = req.body;
-  const { username } = req.body;
-  insertCommentByArticleId(article_id, username, body).then((comment) => {
-    res.status(200).send({comment})
-  })
-  .catch(next)
+  const { body, username } = req.body;
+  insertCommentByArticleId(article_id, username, body)
+    .then((comment) => {
+      res.status(200).send({ comment });
+    })
+    .catch(next);
 };
