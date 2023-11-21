@@ -70,7 +70,7 @@ describe("GET /api/articles/:article_id", () => {
         );
       });
   });
-  test("return a status code of 400 and sends error message when given a valid but non-existent id", () => {
+  test("return a status code of 404 and sends error message when given a valid but non-existent id", () => {
     return request(app)
       .get("/api/articles/99")
       .expect(404)
@@ -78,7 +78,7 @@ describe("GET /api/articles/:article_id", () => {
         expect(response.body.msg).toBe("article does not exist");
       });
   });
-  test("return a status code of 404 and responds with an appropriate error message when given an invalid id", () => {
+  test("return a status code of 400 and responds with an appropriate error message when given an invalid id", () => {
     return request(app)
       .get("/api/articles/a")
       .expect(400)
@@ -138,16 +138,24 @@ describe("POST /api/articles/:article_id/comments", () => {
         })
       });
   });
-  // test("returns a status code of  and response body with posted comment", () => {
-  //   return request(app)
-  //     .post("/api/articles/99/comments")
-  //     .send({
-  //       username: 'icellusedkars',
-  //       body: 'some interesting stuff'
-  //     })
-  //     .expect(404)
-  //     .then((response) => {
-  //       expect(response.body.msg).toBe("article does not exist")
-  //     });
-  // });
+  test("returns a status code of 404 and sends error message when given a valid but non-existent id", () => {
+    return request(app)
+      .post("/api/articles/99/comments")
+      .send({
+        username: 'icellusedkars',
+        body: 'some interesting stuff'
+      })
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("article does not exist")
+      });
+  });
+  test("return a status code of 400 and responds with an appropriate error message when given an invalid id", () => {
+    return request(app)
+      .post("/api/articles/a/comments")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad request");
+      });
+  });
 });

@@ -28,7 +28,17 @@ exports.getAllArticles = () => {
 };
 
 exports.insertCommentByArticleId = (article_id, username, body) => {
-  return db
+return db.
+query(`SELECT * FROM articles
+     WHERE articles.article_id = $1
+`, [article_id]).
+then((data) => {
+  if (!data.rows.length){
+    return Promise.reject({ status: 404, msg: "article does not exist" });
+  }
+ 
+  else {
+    return db
     .query(
       `INSERT INTO comments(author, body, votes, article_id)
   VALUES($1, $2, $3, $4) RETURNING *`,
@@ -37,4 +47,7 @@ exports.insertCommentByArticleId = (article_id, username, body) => {
     .then((data) => {
       return data.rows[0];
     });
+  }
+})
+ 
 };
