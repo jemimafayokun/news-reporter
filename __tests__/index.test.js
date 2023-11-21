@@ -121,15 +121,18 @@ describe("GET /api/articles/:article_id/comments", () => {
       .expect(200)
       .then((response) => {
         const allComments = response.body.comments;
+        expect(allComments).toBeSortedBy("created_at", {
+          descending: true,
+        });
         expect(allComments.length).toBe(11);
         allComments.forEach((comment) => {
+          expect(comment.article_id).toBe(1)
           expect(comment).toMatchObject({
             comment_id: expect.any(Number),
             author: expect.any(String),
             created_at: expect.any(String),
             votes: expect.any(Number),
             body: expect.any(String),
-            article_id: expect.any(Number),
           });
         });
       });
@@ -140,8 +143,7 @@ describe("GET /api/articles/:article_id/comments", () => {
       .expect(200)
       .then((response) => {
         const allComments = response.body.comments;
-        expect(allComments).toEqual([])
-        
+        expect(allComments).toEqual([]);
       });
   });
   test("return a status code of return a status code of 404 and sends error message when given a valid but non-existent id", () => {
