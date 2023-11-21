@@ -1,8 +1,11 @@
+
 const {
   getArticleByID,
   getAllArticles,
   insertCommentByArticleId,
 } = require("../models/articles.model");
+const { checkExists } = require("../db/seeds/utils");
+
 
 exports.getArticle = (req, res, next) => {
   const { article_id } = req.params;
@@ -19,12 +22,17 @@ exports.getArticles = (req, res, next) => {
   });
 };
 
-exports.postCommentByArticleId = (req, res, next) => {
-  const { article_id } = req.params;
-  const { body, username } = req.body;
-  insertCommentByArticleId(article_id, username, body)
-    .then((comment) => {
-      res.status(200).send({ comment });
-    })
-    .catch(next);
-};
+exports.getCommentsByArticleId = (req, res, next) => {
+  const {article_id} = req.params
+  const commentsByArticleIdPromises = [fetchCommentsByArticleId(article_id)];
+  
+  if (article_id) {
+    commentsByArticleIdPromises.push(checkExists("articles", "article_id", article_id));
+  }
+  
+  Promise.all(commentsByArticleIdPromises)
+    .then((resolvedPromises) => {
+      const comments = resolvedPromises[0];
+      res.status(200).send({ comments });
+    }).catch(next)
+}

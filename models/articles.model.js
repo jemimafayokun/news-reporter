@@ -49,3 +49,15 @@ then((data) => {
 })
  
 };
+
+exports.fetchCommentsByArticleId = (article_id) => {
+  return db
+  .query(`SELECT comment_id, comments.votes, comments.created_at, comments.author, comments.body, comments.article_id FROM comments
+          WHERE comments.article_id = $1
+          GROUP BY comments.comment_id
+          ORDER BY created_at DESC;`, [article_id]
+        ).then((data) => {
+          return data.rows
+        })
+}
+
