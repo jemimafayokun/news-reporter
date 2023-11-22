@@ -3,7 +3,6 @@ const {
   getAllArticles,
   insertCommentByArticleId,
   updateVotesByArticleId,
-  removeCommentByCommentId,
 } = require("../models/articles.model");
 const { checkExists } = require("../db/seeds/utils");
 
@@ -58,11 +57,4 @@ exports.patchVotesByArticleId = (req, res, next) => {
       res.status(200).send({ article });
     })
     .catch(next);
-};
-
-exports.deleteCommentByCommentId = (req, res, next) => {
-  const { comment_id } = req.params;
-  removeCommentByCommentId(comment_id).then(() => {
-    res.status(204).send();
-  }).catch(next)
 };

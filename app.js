@@ -11,10 +11,11 @@ const {
   postCommentByArticleId,
   getCommentsByArticleId,
   patchVotesByArticleId,
-  deleteCommentByCommentId,
 } = require("./controllers/articles.controller");
 
 const { handleCustomErrors, handlePsqlErrors } = require("./errors");
+const { deleteCommentByCommentId } = require("./controllers/comments.controller");
+const { getUsers } = require("./controllers/user.controller");
 const app = express();
 app.use(express.json());
 
@@ -32,7 +33,10 @@ app.post("/api/articles/:article_id/comments", postCommentByArticleId);
 app.patch("/api/articles/:article_id", patchVotesByArticleId);
 
 //comments endpoints
-app.delete("/api/comments/:comment_id", deleteCommentByCommentId )
+app.delete("/api/comments/:comment_id", deleteCommentByCommentId)
+
+//user endpoints
+app.get('/api/users', getUsers)
 
 //error handling middleware
 app.use(handlePsqlErrors);
