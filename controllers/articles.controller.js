@@ -1,11 +1,10 @@
-
 const {
   getArticleByID,
   getAllArticles,
   insertCommentByArticleId,
+  updateVotesByArticleId,
 } = require("../models/articles.model");
 const { checkExists } = require("../db/seeds/utils");
-
 
 exports.getArticle = (req, res, next) => {
   const { article_id } = req.params;
@@ -23,16 +22,37 @@ exports.getArticles = (req, res, next) => {
 };
 
 exports.getCommentsByArticleId = (req, res, next) => {
-  const {article_id} = req.params
+  const { article_id } = req.params;
   const commentsByArticleIdPromises = [fetchCommentsByArticleId(article_id)];
-  
+
   if (article_id) {
-    commentsByArticleIdPromises.push(checkExists("articles", "article_id", article_id));
+    commentsByArticleIdPromises.push(
+      checkExists("articles", "article_id", article_id)
+    );
   }
-  
+
   Promise.all(commentsByArticleIdPromises)
     .then((resolvedPromises) => {
       const comments = resolvedPromises[0];
       res.status(200).send({ comments });
-    }).catch(next)
-}
+    })
+    .catch(next);
+};
+
+exports.postCommentByArticleId = (req, res, next) => {
+  const { article_id } = req.params;
+  const { username, body } = req.body;
+  insertCommentByArticleId(article_id, username, body)
+    .then((comment) => {
+      res.status(201).send({ comment });
+    })
+    .catch(next);
+};
+
+exports.incrementVotesByArticleId = (req, res, next) => {
+  const { article_id } = req.params;
+  const { inc_votes } = req.body;
+  updateVotesByArticleId(article_id, inc_votes).then((article) => {
+    res.status(200).send({ article });
+  }).catch(next)
+};
