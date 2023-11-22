@@ -10,7 +10,7 @@ const {
   getArticles,
   postCommentByArticleId,
   getCommentsByArticleId,
-  incrementVotesByArticleId,
+  patchVotesByArticleId,
 } = require("./controllers/articles.controller");
 
 const { handleCustomErrors, handlePsqlErrors } = require("./errors");
@@ -26,7 +26,7 @@ app.get("/api/articles/:article_id", getArticle);
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
 
 app.post("/api/articles/:article_id/comments", postCommentByArticleId);
-app.patch("/api/articles/:article_id", incrementVotesByArticleId);
+app.patch("/api/articles/:article_id", patchVotesByArticleId);
 
 app.use(handlePsqlErrors);
 app.use(handleCustomErrors);

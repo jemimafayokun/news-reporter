@@ -211,7 +211,7 @@ describe("PATCH /api/articles/:article_id", () => {
   });
   test("return a status code of 400 and responds with an appropriate error message when given an invalid id", () => {
     return request(app)
-      .patch("/api/articles/a/comments")
+      .patch("/api/articles/a")
       .send({ inc_votes: -30 })
       .expect(400)
       .then((response) => {
