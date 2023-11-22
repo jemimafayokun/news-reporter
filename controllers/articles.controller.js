@@ -1,5 +1,11 @@
+
+const {
+  getArticleByID,
+  getAllArticles,
+  insertCommentByArticleId,
+} = require("../models/articles.model");
 const { checkExists } = require("../db/seeds/utils");
-const { getArticleByID, getAllArticles, fetchCommentsByArticleId } = require("../models/articles.model");
+
 
 exports.getArticle = (req, res, next) => {
   const { article_id } = req.params;

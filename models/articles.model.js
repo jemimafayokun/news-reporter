@@ -27,6 +27,29 @@ exports.getAllArticles = () => {
     });
 };
 
+exports.insertCommentByArticleId = (article_id, username, body) => {
+return db.
+query(`SELECT * FROM articles
+     WHERE articles.article_id = $1
+`, [article_id]).
+then((data) => {
+  if (!data.rows.length){
+    return Promise.reject({ status: 404, msg: "article does not exist" });
+  }
+    return db
+    .query(
+      `INSERT INTO comments(author, body, votes, article_id)
+  VALUES($1, $2, $3, $4) RETURNING *`,
+      [username, body, (votes = 0), article_id]
+    )
+    .then((data) => {
+      return data.rows[0];
+    });
+  
+})
+ 
+};
+
 exports.fetchCommentsByArticleId = (article_id) => {
   return db
   .query(`SELECT comment_id, comments.votes, comments.created_at, comments.author, comments.body, comments.article_id FROM comments
@@ -37,3 +60,4 @@ exports.fetchCommentsByArticleId = (article_id) => {
           return data.rows
         })
 }
+
