@@ -158,3 +158,64 @@ describe("POST /api/articles/:article_id/comments", () => {
       });
   });
 });
+
+describe("PATCH /api/articles/:article_id", () => {
+  test("return status code of 200 and responds with updated article with votes incremented by positive inc_votes value", () => {
+    return request(app)
+      .patch("/api/articles/7")
+      .send({ inc_votes: 10 })
+      .expect(200)
+      .then((response) => {
+        const updatedArticle = response.body.article;
+        expect(updatedArticle).toEqual({
+          article_id: 7,
+          title: "Z",
+          topic: "mitch",
+          author: "icellusedkars",
+          body: "I was hungry.",
+          created_at: "2020-01-07T14:08:00.000Z",
+          votes: 10,
+          article_img_url:
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+        });
+      });
+  });
+  test("return status code of 200 and responds with updated article with votes decremented by negative inc_votes value", () => {
+    return request(app)
+      .patch("/api/articles/1")
+      .send({ inc_votes: -30 })
+      .expect(200)
+      .then((response) => {
+        const updatedArticle = response.body.article;
+        expect(updatedArticle).toEqual({
+          article_id: 1,
+          title: "Living in the shadow of a great man",
+          topic: "mitch",
+          author: "butter_bridge",
+          body: "I find this existence challenging",
+          created_at: "2020-07-09T20:11:00.000Z",
+          votes: 70,
+          article_img_url:
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+        });
+      });
+  });
+  test("returns a status code of 404 and sends error message when given a valid but non-existent id", () => {
+    return request(app)
+      .patch("/api/articles/99")
+      .send({ inc_votes: -30 })
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("article does not exist");
+      });
+  });
+  test("return a status code of 400 and responds with an appropriate error message when given an invalid id", () => {
+    return request(app)
+      .patch("/api/articles/a")
+      .send({ inc_votes: -30 })
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad request");
+      });
+  });
+});
