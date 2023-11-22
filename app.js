@@ -34,7 +34,7 @@ app.patch("/api/articles/:article_id", patchVotesByArticleId);
 //comments endpoints
 app.delete("/api/comments/:comment_id", deleteCommentByCommentId )
 
-//error handeling middleware
+//error handling middleware
 app.use(handlePsqlErrors);
 app.use(handleCustomErrors);
 
