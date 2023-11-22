@@ -59,5 +59,11 @@
         }
       ]
     }
+  },
+  "DELETE /api/comments/:comment_id": {
+    "description": "deletes comment by comment id an returns no content",
+    "queries": [],
+    "exampleResponse": {
+    }
   }
 }

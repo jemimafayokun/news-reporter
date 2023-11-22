@@ -11,6 +11,7 @@ const {
   postCommentByArticleId,
   getCommentsByArticleId,
   patchVotesByArticleId,
+  deleteCommentByCommentId,
 } = require("./controllers/articles.controller");
 
 const { handleCustomErrors, handlePsqlErrors } = require("./errors");
@@ -19,15 +20,21 @@ app.use(express.json());
 
 app.get("/api/healthcheck", getHealthcheck);
 app.get("/api", getApi);
+
+//topics endpoints
 app.get("/api/topics", getTopics);
 
+//articles endpoints
 app.get("/api/articles", getArticles);
 app.get("/api/articles/:article_id", getArticle);
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
-
 app.post("/api/articles/:article_id/comments", postCommentByArticleId);
 app.patch("/api/articles/:article_id", patchVotesByArticleId);
 
+//comments endpoints
+app.delete("/api/comments/:comment_id", deleteCommentByCommentId )
+
+//error handling middleware
 app.use(handlePsqlErrors);
 app.use(handleCustomErrors);
 
