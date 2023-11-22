@@ -219,3 +219,26 @@ describe("PATCH /api/articles/:article_id", () => {
       });
   });
 });
+
+describe("DELETE /api/comments/:comment_id", () => {
+  test("return a status code of 204 and no content", () => {
+    return request(app).delete("/api/comments/2").expect(204);
+  });
+  test("return a status code of 404 and sends error message when given a valid but non-existent i", () => {
+    return request(app)
+      .delete("/api/comments/99")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("comment does not exist");
+      });
+  });
+
+  test("return a status code of 400 and responds with an appropriate error message when given an invalid id", () => {
+    return request(app)
+      .delete("/api/comments/a")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad request");
+      });
+  });
+});
