@@ -49,10 +49,12 @@ exports.postCommentByArticleId = (req, res, next) => {
     .catch(next);
 };
 
-exports.incrementVotesByArticleId = (req, res, next) => {
+exports.patchVotesByArticleId = (req, res, next) => {
   const { article_id } = req.params;
   const { inc_votes } = req.body;
-  updateVotesByArticleId(article_id, inc_votes).then((article) => {
-    res.status(200).send({ article });
-  }).catch(next)
+  updateVotesByArticleId(article_id, inc_votes)
+    .then((article) => {
+      res.status(200).send({ article });
+    })
+    .catch(next);
 };

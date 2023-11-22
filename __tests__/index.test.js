@@ -200,7 +200,7 @@ describe("PATCH /api/articles/:article_id", () => {
         });
       });
   });
-  test.only("returns a status code of 404 and sends error message when given a valid but non-existent id", () => {
+  test("returns a status code of 404 and sends error message when given a valid but non-existent id", () => {
     return request(app)
       .patch("/api/articles/99")
       .send({ inc_votes: -30 })
