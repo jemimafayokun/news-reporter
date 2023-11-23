@@ -2,16 +2,16 @@
 
 Welcome to the News Reporter API! This project provides a set of HTTP endpoints for fetching and manipulating data in a PostgreSQL database.
 
-# Hosted Version
+## Hosted Version
 
-- Check out the hosted version of the News Reporter API: https://my-news-reporter-k1n3.onrender.com/
-- To view the available endpoints: https://my-news-reporter-k1n3.onrender.com/api
+- Check out the hosted version of the News Reporter API [here] https://my-news-reporter-k1n3.onrender.com/
+- To view the available [endpoints] https://my-news-reporter-k1n3.onrender.com/api
 
-# Overview
+## Overview
 
 The News Reporter API allows users to interact with a PostgreSQL database to retrieve and manipulate news data. It exposes various HTTP endpoints for tasks such as fetching news articles, creating or deleting new entries, viewing comments and more.
 
-# Getting Started
+## Getting Started
 
 Prerequisites:
 
@@ -29,7 +29,7 @@ Clone the Repository:
 
 ```
 
-# Dependencies required:
+## Dependencies required:
 
 ```
 - npm install dotenv
@@ -40,7 +40,7 @@ Clone the Repository:
 
 ```
 
-# Dev-Dependencies required:
+## Dev-Dependencies required:
 
 ```
 - npm install --save-dev jest
@@ -48,7 +48,7 @@ Clone the Repository:
 
 ```
 
-# Set Up the Database:
+## Set Up the Database:
 
 ```
 - npm run setup-db
@@ -56,14 +56,14 @@ Clone the Repository:
 
 ```
 
-# Run Tests:
+## Run Tests:
 
 ```
 - npm test
 
 ```
 
-# Creating Environment Variables:
+## Creating Environment Variables:
 
 In order to connect successfully to the two databases locally you must create a .env.development file which contains the PGDATABASE of the development data as well as a .env.test file which contains the PGDATABASE of the test data.
 
