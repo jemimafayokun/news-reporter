@@ -27,16 +27,16 @@ Clone the Repository:
 
 # Dependencies required:
 
-- dotenv
-- express
-- fs.promises
-- pg
-- pg-format
+- npm install dotenv
+- npm install express
+- npm install fs.promises
+- npm install pg
+- npm install pg-format
 
 # Dev-Dependencies required:
 
-- jest
-- supertest
+- npm install --save-dev jest
+- npm install --save-dev supertest
 
 # Set Up the Database:
 
@@ -49,7 +49,8 @@ Clone the Repository:
 
 # Creating Environment Variables:
 
-- In order to connect successfully to the two databases locally you must create a .env.development file which contains the PGDATABASE of the development data as well as a .env.test file which contains the PGDATABASE of the test data.
+In order to connect successfully to the two databases locally you must create a .env.development file which contains the PGDATABASE of the development data as well as a .env.test file which contains the PGDATABASE of the test data.
 
 - The inside of each file should look like the following:
-- PGDATABASE=name_of_database
+
+PGDATABASE=name_of_database
