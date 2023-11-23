@@ -32,6 +32,7 @@ app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
 app.post("/api/articles/:article_id/comments", postCommentByArticleId);
 app.patch("/api/articles/:article_id", patchVotesByArticleId);
 
+
 //comments endpoints
 app.delete("/api/comments/:comment_id", deleteCommentByCommentId)
 

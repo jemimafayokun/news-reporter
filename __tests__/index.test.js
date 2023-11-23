@@ -261,3 +261,45 @@ describe("GET /api/users", () => {
       });
   });
 });
+
+describe("GET /api/articles (topic query)", () => {
+  test("returns a status 200 and responds with  filters the articles by the topic value specified in the query.", () => {
+    return request(app)
+      .get("/api/articles?topic=mitch")
+      .expect(200)
+      .then(({ body }) => {
+        const filteredByTopic = body.articles;
+        expect(filteredByTopic.length).toBe(12);
+        filteredByTopic.forEach((article) => {
+          expect(article.topic).toBe("mitch");
+          expect(article).toMatchObject({
+            article_id: expect.any(Number),
+            title: expect.any(String),
+            topic: expect.any(String),
+            author: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+            article_img_url: expect.any(String),
+            comment_count: expect.any(String),
+          });
+        });
+      });
+  });
+  test("returns a status 200 and responds with empty array when topic exists but no related article", () => {
+    return request(app)
+      .get("/api/articles?topic=paper")
+      .expect(200)
+      .then(({ body }) => {
+        const filteredByTopic = body.articles;
+        expect(filteredByTopic).toEqual([]);
+      });
+  });
+  test("returns a status code of 404 and sends error message when given a valid but non-existent topic", () => {
+    return request(app)
+      .get("/api/articles?topic=dogs")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("not found");
+      });
+  });
+});
