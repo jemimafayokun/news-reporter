@@ -18,8 +18,8 @@ Node.js minimum version: v18.18.2
 PostgreSQL minimum version: v14.9
 
 Clone the Repository:
-git clone [https://github.com/jemimafayokun/news-reporter]
-cd [news-reporter]
+git clone https://github.com/jemimafayokun/news-reporter
+cd news-reporter
 
 Dependencies required:
 
@@ -30,14 +30,17 @@ pg
 pg-format
 
 Dev-Dependencies required:
+
 jest
 supertest
 
 Set Up the Database:
+
 npm run setup-db
 npm run seed
 
 Run Tests:
+
 npm test
 
 Creating Environment Variables:
