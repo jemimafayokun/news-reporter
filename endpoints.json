@@ -65,5 +65,12 @@
     "queries": [],
     "exampleResponse": {
     }
+  },
+  "GET /api/users": {
+    "description": "serves an array of all users",
+    "queries": [],
+    "exampleResponse": {
+    }
   }
+  
 }

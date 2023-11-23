@@ -311,17 +311,15 @@ describe("GET /api/articles/:article_id (comment_count)", () => {
       .expect(200)
       .then(({ body }) => {
         const articleWithCommentCount = body.article;
-        expect(articleWithCommentCount.article_id).toBe(1);
-        expect(articleWithCommentCount.comment_count).toBe("11");
         expect(articleWithCommentCount).toMatchObject({
-          article_id: expect.any(Number),
+          article_id: 1,
           title: expect.any(String),
           topic: expect.any(String),
           author: expect.any(String),
           created_at: expect.any(String),
           votes: expect.any(Number),
           article_img_url: expect.any(String),
-          comment_count: expect.any(String),
+          comment_count: "11",
         });
       });
   });
