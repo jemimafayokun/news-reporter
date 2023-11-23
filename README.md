@@ -4,7 +4,7 @@ Welcome to the News Reporter API! This project provides a set of HTTP endpoints 
 
 ## Hosted Version
 
-- Check out the hosted version of the News Reporter API [here](https://my-news-reporter-k1n3.onrender.com/)
+- Check out the hosted version of the [News Reporter API](https://my-news-reporter-k1n3.onrender.com/)
 - To view the available [endpoints](https://my-news-reporter-k1n3.onrender.com/api)
 
 ## Overview
