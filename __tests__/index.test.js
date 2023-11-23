@@ -303,3 +303,59 @@ describe("GET /api/articles (topic query)", () => {
       });
   });
 });
+
+describe("GET /api/articles/:article_id (comment_count)", () => {
+  test("returns a status code of 200 and responds with an article object which also includes comment count", () => {
+    return request(app)
+      .get("/api/articles/1?add_feature=comment_count")
+      .expect(200)
+      .then(({ body }) => {
+        const articleWithCommentCount = body.article;
+        expect(articleWithCommentCount.article_id).toBe(1);
+        expect(articleWithCommentCount).toMatchObject({
+          article_id: expect.any(Number),
+          title: expect.any(String),
+          topic: expect.any(String),
+          author: expect.any(String),
+          created_at: expect.any(String),
+          votes: expect.any(Number),
+          article_img_url: expect.any(String),
+          comment_count: expect.any(String),
+        });
+      });
+  });
+  test("returns a status code of 200 and responds with an article object without comment count, if feature is invalid", () => {
+    return request(app)
+      .get("/api/articles/1?add_feature=ratings")
+      .expect(200)
+      .then(({ body }) => {
+        const articleWithCommentCount = body.article;
+        expect(articleWithCommentCount.article_id).toBe(1);
+        expect(articleWithCommentCount).toMatchObject({
+          article_id: expect.any(Number),
+          title: expect.any(String),
+          topic: expect.any(String),
+          author: expect.any(String),
+          created_at: expect.any(String),
+          votes: expect.any(Number),
+          article_img_url: expect.any(String)
+        });
+      });
+  });
+  test("return a status code of 404 and sends error message when given a valid but non-existent id", () => {
+    return request(app)
+      .get("/api/articles/99?add_feature=comment_count")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("article does not exist");
+      });
+  });
+  test("return a status code of 400 and responds with an appropriate error message when given an invalid id", () => {
+    return request(app)
+      .get("/api/articles/a?add_feature=comment_count")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad request");
+      });
+  });
+});
