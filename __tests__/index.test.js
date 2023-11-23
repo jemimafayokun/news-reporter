@@ -303,3 +303,26 @@ describe("GET /api/articles (topic query)", () => {
       });
   });
 });
+
+describe("GET /api/articles/:article_id (comment_count)", () => {
+  test("returns a status code of 200 and responds with an article object which also includes comment count", () => {
+    return request(app)
+      .get("/api/articles/1")
+      .expect(200)
+      .then(({ body }) => {
+        const articleWithCommentCount = body.article;
+        expect(articleWithCommentCount.article_id).toBe(1);
+        expect(articleWithCommentCount.comment_count).toBe("11");
+        expect(articleWithCommentCount).toMatchObject({
+          article_id: expect.any(Number),
+          title: expect.any(String),
+          topic: expect.any(String),
+          author: expect.any(String),
+          created_at: expect.any(String),
+          votes: expect.any(Number),
+          article_img_url: expect.any(String),
+          comment_count: expect.any(String),
+        });
+      });
+  });
+});
