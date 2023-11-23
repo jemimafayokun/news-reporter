@@ -22,30 +22,46 @@ Prerequisites:
 
 Clone the Repository:
 
+```
+
 - git clone https://github.com/jemimafayokun/news-reporter
 - cd news-reporter
 
+```
+
 # Dependencies required:
 
+```
 - npm install dotenv
 - npm install express
 - npm install fs.promises
 - npm install pg
 - npm install pg-format
 
+```
+
 # Dev-Dependencies required:
 
+```
 - npm install --save-dev jest
 - npm install --save-dev supertest
 
+```
+
 # Set Up the Database:
 
+```
 - npm run setup-db
 - npm run seed
 
+```
+
 # Run Tests:
 
+```
 - npm test
+
+```
 
 # Creating Environment Variables:
 
