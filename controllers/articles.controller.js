@@ -8,8 +8,7 @@ const { checkExists } = require("../db/seeds/utils");
 
 exports.getArticle = (req, res, next) => {
   const { article_id } = req.params;
-  const { add_feature } = req.query;
-  getArticleByID(article_id, add_feature)
+  getArticleByID(article_id)
     .then((article) => {
       res.status(200).send({ article });
     })
