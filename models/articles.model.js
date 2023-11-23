@@ -12,13 +12,27 @@ exports.getArticleByID = (article_id) => {
     });
 };
 
-exports.getAllArticles = () => {
+exports.getAllArticles = (topic) => {
+  const psqlQuery = `SELECT articles.article_id, title, topic, articles.author, articles.created_at, articles.votes, article_img_url , COUNT(comments.article_id) AS comment_count
+FROM comments 
+FULL OUTER JOIN articles
+ON articles.article_id = comments.article_id `;
+
+  if (topic) {
+    return db.query(
+      `${psqlQuery}
+               WHERE articles.topic = $1
+               GROUP BY articles.article_id
+               ORDER BY created_at DESC;`,
+      [topic]
+    ).then((data) => {
+      return data.rows;
+    });
+  }
+
   return db
     .query(
-      `SELECT articles.article_id, title, topic, articles.author, articles.created_at, articles.votes, article_img_url , COUNT(comments.article_id) AS comment_count
-        FROM comments 
-        FULL OUTER JOIN articles
-        ON articles.article_id = comments.article_id
+      `${psqlQuery}
         GROUP BY articles.article_id
         ORDER BY created_at DESC;`
     )
@@ -87,4 +101,3 @@ exports.updateVotesByArticleId = (article_id, inc_votes) => {
         });
     });
 };
-

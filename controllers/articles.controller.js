@@ -16,9 +16,19 @@ exports.getArticle = (req, res, next) => {
 };
 
 exports.getArticles = (req, res, next) => {
-  getAllArticles().then((articles) => {
-    res.status(200).send({ articles });
-  });
+  const { topic } = req.query;
+  const articlesByTopicsPromises = [getAllArticles(topic)];
+
+  if (topic) {
+    articlesByTopicsPromises.push(checkExists("topics", "slug", topic));
+  }
+
+  Promise.all(articlesByTopicsPromises)
+    .then((resolvedPromises) => {
+      const articles = resolvedPromises[0];
+      res.status(200).send({ articles });
+    })
+    .catch(next);
 };
 
 exports.getCommentsByArticleId = (req, res, next) => {
