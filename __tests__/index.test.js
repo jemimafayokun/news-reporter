@@ -242,3 +242,22 @@ describe("DELETE /api/comments/:comment_id", () => {
       });
   });
 });
+
+describe("GET /api/users", () => {
+  test("return a status code of 200 and responds with an array of all users", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then(({ body }) => {
+        const allUsers = body.users;
+        expect(allUsers.length).toBe(4);
+        allUsers.forEach((user) => {
+          expect(user).toMatchObject({
+            username: expect.any(String),
+            name: expect.any(String),
+            avatar_url: expect.any(String),
+          });
+        });
+      });
+  });
+});
