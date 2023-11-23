@@ -38,6 +38,7 @@ Clone the Repository:
 - npm install pg-format
 
 ```
+
 ## Dev-Dependencies required:
 
 ```
@@ -45,6 +46,7 @@ Clone the Repository:
 - npm install --save-dev supertest
 
 ```
+
 ## Set Up the Database:
 
 ```
@@ -52,15 +54,17 @@ Clone the Repository:
 - npm run seed
 
 ```
+
 ## Run Tests:
 
 ```
 - npm test
 
 ```
+
 ## Creating Environment Variables:
 
-In order to connect successfully to the two databases locally you must create a .env.development file which contains the PGDATABASE of the development data as well as a .env.test file which contains the PGDATABASE of the test data.
+In order to connect successfully to the two databases locally you must create a .env.development file which references the PGDATABASE of the development data as well as a .env.test file which references the PGDATABASE of the test data.
 
 - The inside of each file should look like the following:
 
