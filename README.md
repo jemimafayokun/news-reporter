@@ -23,7 +23,6 @@ Prerequisites:
 Clone the Repository:
 
 ```
-
 - git clone https://github.com/jemimafayokun/news-reporter
 - cd news-reporter
 
