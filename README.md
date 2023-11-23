@@ -69,4 +69,7 @@ In order to connect successfully to the two databases locally you must create a 
 
 - The inside of each file should look like the following:
 
+```
 PGDATABASE=name_of_database
+
+```
