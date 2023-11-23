@@ -3,7 +3,7 @@
 Welcome to the News Reporter API! This project provides a set of HTTP endpoints for fetching and manipulating data in a PostgreSQL database.
 
 Overview:
-The News Reporter API allows users to interact with a PostgreSQL database to retrieve and manipulate news data. It exposes various HTTP endpoints for tasks such as fetching news articles, creating new entries, and more.
+The News Reporter API allows users to interact with a PostgreSQL database to retrieve and manipulate news data. It exposes various HTTP endpoints for tasks such as fetching news articles, creating or deleting new entries, viewing comments and more.
 
 Getting Started
 
