@@ -454,6 +454,23 @@ describe("PATCH /api/comments/:comment_id", () => {
         });
       });
   });
+  test("returns status 200 and repsonds with comment object with updated vote count when inc_vote is negative", () => {
+    return request(app)
+      .patch("/api/comments/1")
+      .send({ inc_votes: -5 })
+      .expect(200)
+      .then(({ body }) => {
+        const updatedComment = body.comment;
+        expect(updatedComment).toMatchObject({
+          comment_id: 1,
+          body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+          article_id: 9,
+          author: "butter_bridge",
+          votes: 11,
+          created_at: "2020-04-06T12:17:00.000Z",
+        });
+      });
+  });
   test("returns status 404 and responds with err message if comment_id does not exist", () => {
     return request(app)
       .patch("/api/comments/99")
@@ -470,6 +487,32 @@ describe("PATCH /api/comments/:comment_id", () => {
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).toBe("Bad request");
+      });
+  });
+});
+
+describe("POST /api/articles", () => {
+  test("returns status 200 and responds with newly created article object", () => {
+    return request(app)
+      .post("/api/articles")
+      .send({
+        author: "icellusedkars",
+        title: "You're gonna wanna read this!",
+        body: "The most interesting thing you have ever read.",
+        topic: "paper",
+      })
+      .expect(200)
+      .then(({ body }) => {
+        const newArticle = body.article;
+        expect(newArticle).toMatchObject({
+          article_id: 14,
+          title: "You're gonna wanna read this!",
+          topic: "paper",
+          author: "icellusedkars",
+          created_at: expect.any(String),
+          votes: 0,
+          article_img_url: expect.any(String),
+        });
       });
   });
 });

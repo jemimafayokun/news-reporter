@@ -3,6 +3,7 @@ const {
   getAllArticles,
   insertCommentByArticleId,
   updateVotesByArticleId,
+  insertArticle,
 } = require("../models/articles.model");
 const { checkExists } = require("../db/seeds/utils");
 
@@ -49,6 +50,13 @@ exports.getCommentsByArticleId = (req, res, next) => {
       res.status(200).send({ comments });
     })
     .catch(next);
+};
+
+exports.postArticle = (req, res, next) => {
+  const { author, title, topic, body } = req.body;
+  insertArticle(author, title, topic, body).then((article) => {
+    res.status(200).send({ article });
+  });
 };
 
 exports.postCommentByArticleId = (req, res, next) => {
