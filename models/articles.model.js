@@ -82,6 +82,18 @@ exports.insertCommentByArticleId = (article_id, username, body) => {
     });
 };
 
+exports.insertArticle = (author, title, topic, body) => {
+  return db
+    .query(
+      `INSERT INTO articles(title, topic, body, author)
+           VALUES($1, $2, $3, $4) RETURNING *`,
+      [title, topic, body, author]
+    )
+    .then((data) => {
+      return data.rows[0];
+    });
+};
+
 exports.fetchCommentsByArticleId = (article_id) => {
   return db
     .query(
