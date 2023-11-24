@@ -411,3 +411,27 @@ describe("GET /api/articles (sorting queries)", () => {
       });
   });
 });
+
+describe("GET /api/users/:username", () => {
+  test("returns status code of 200 and return user object", () => {
+    return request(app)
+      .get("/api/users/rogersop")
+      .expect(200)
+      .then(({ body }) => {
+        const user = body.user;
+        expect(user).toMatchObject({
+          username: "rogersop",
+          avatar_url: expect.any(String),
+          name: expect.any(String),
+        });
+      });
+  });
+  test("returns status code of 400 if username does not  exist", () => {
+    return request(app)
+      .get("/api/users/jemima")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("username does not exist");
+      });
+  });
+});
