@@ -20,19 +20,26 @@ exports.getArticleByID = (article_id) => {
     });
 };
 
-exports.getAllArticles = (topic) => {
+exports.getAllArticles = (topic, sortBy = "created_at", orderBy = "DESC") => {
+  const validSortBy = ["created_at", "article_id", "votes", "comment_count"];
+  const validOrderBy = ["ASC", "DESC"];
   const psqlQuery = `SELECT articles.article_id, title, topic, articles.author, articles.created_at, articles.votes, article_img_url , COUNT(comments.article_id) AS comment_count
-FROM comments 
-FULL OUTER JOIN articles
-ON articles.article_id = comments.article_id `;
+                     FROM comments 
+                     FULL OUTER JOIN articles
+                     ON articles.article_id = comments.article_id `;
 
+  if (!validSortBy.includes(sortBy)) {
+    return Promise.reject({ status: 400, msg: "Invalid sort query" });
+  } else if (!validOrderBy.includes(orderBy)) {
+    return Promise.reject({ status: 400, msg: "Invalid order query" });
+  }
   if (topic) {
     return db
       .query(
         `${psqlQuery}
                WHERE articles.topic = $1
                GROUP BY articles.article_id
-               ORDER BY created_at DESC;`,
+               ORDER BY ${sortBy} ${orderBy};`,
         [topic]
       )
       .then((data) => {
@@ -44,7 +51,7 @@ ON articles.article_id = comments.article_id `;
     .query(
       `${psqlQuery}
         GROUP BY articles.article_id
-        ORDER BY created_at DESC;`
+        ORDER BY ${sortBy} ${orderBy}`
     )
     .then((data) => {
       return data.rows;
