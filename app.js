@@ -5,10 +5,11 @@ const topicsRouter = require("./routers/topics.routers");
 const articlesRouter = require("./routers/articles.routers");
 const commentsRouter = require("./routers/comments.routers");
 const usersRouter = require("./routers/users.routers");
-
 const { handleCustomErrors, handlePsqlErrors } = require("./errors");
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 //routers
