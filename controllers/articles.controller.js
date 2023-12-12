@@ -4,6 +4,7 @@ const {
   insertCommentByArticleId,
   updateVotesByArticleId,
   insertArticle,
+  fetchCommentsByArticleId,
 } = require("../models/articles.model");
 const { checkExists } = require("../db/seeds/utils");
 
