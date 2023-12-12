@@ -114,6 +114,56 @@ describe("GET /api/articles", () => {
       });
   });
 });
+describe("GET /api/articles/:article_id/comments", () => {
+  test("return a status code of 200 and response body with an array of all comments from a particular article", () => {
+    return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      .then((response) => {
+        const allComments = response.body.comments;
+        expect(allComments).toBeSortedBy("created_at", {
+          descending: true,
+        });
+        expect(allComments.length).toBe(11);
+        allComments.forEach((comment) => {
+          expect(comment.article_id).toBe(1)
+          expect(comment).toMatchObject({
+            comment_id: expect.any(Number),
+            author: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+            body: expect.any(String),
+          });
+        });
+      });
+  });
+  test("return a status code of 200 and response body with an empty array if article_id exist but no comments", () => {
+    return request(app)
+      .get("/api/articles/7/comments")
+      .expect(200)
+      .then((response) => {     const allComments = response.body.comments;
+        expect(allComments).toEqual([]);
+      });
+  });
+  test("return a status code of return a status code of 404 and sends error message when given a valid but non-existent id", () => {
+    return request(app)
+      .get("/api/articles/99/comments")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.msg).toBe("not found");
+      });
+  });
+  test("return a status code of 400 and responds with an appropriate error message when given an invalid id", () => {
+    return request(app)
+      .get("/api/articles/a/comments")
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad request");
+      });
+  });
+});
+
+
 
 describe("POST /api/articles/:article_id/comments", () => {
   test("returns a status code of 201 and response body with posted comment", () => {
